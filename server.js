@@ -3,6 +3,7 @@ const express = require('express');
 const server = express();
 
 server.use(express.json());
+server.use(logger)
 
 const userRouter = require('./users/userRouter.js');
 server.use('/api/users', userRouter)
@@ -13,6 +14,10 @@ server.get('/', (req, res) => {
 
 //custom middleware
 
-function logger(req, res, next) {}
+function logger(req, res, next) {
+  console.log(`There was a ${req.method} request on the ${req.url} endpoint on ${new Date()}`)
+  next();
+
+}
 
 module.exports = server;
