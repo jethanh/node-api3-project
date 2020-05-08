@@ -1,29 +1,63 @@
 const express = require('express');
+const User = require('./userDb.js');
+const Post = require('../posts/postDb.js')
 
 const router = express.Router();
 
 router.post('/', (req, res) => {
-  // do your magic!
+  const info = req.body;
+  User.insert(info.name)
+    .then(item => {
+      res.status(201).json(item)
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: "Somethin' went wrong, bucko." })
+    })
 });
 
 router.post('/:id/posts', (req, res) => {
-  // do your magic!
+  const {id: userId} = req.params;
+  console.log(userId)
+  console.log(req.body)
+
+  
 });
 
 router.get('/', (req, res) => {
-  // do your magic!
+  User.get()
+    .then(item => {
+      res.status(200).json(item)
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: "Somethin' went wrong, bucko." })
+    })
 });
 
 router.get('/:id', (req, res) => {
-  // do your magic!
+  const id = req.params.id;
+  User.getById(id)
+    .then(item => {
+      res.status(200).json(item)
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: "Somethin' went wrong, bucko." })
+    })
+  
 });
 
 router.get('/:id/posts', (req, res) => {
-  // do your magic!
+  const id = req.params.id;
+  User.getUserPosts(id)
+    .then(item => {
+      res.status(200).json(item)
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: "Somethin' went wrong, bucko." })
+    })
 });
 
 router.delete('/:id', (req, res) => {
-  // do your magic!
+  
 });
 
 router.put('/:id', (req, res) => {
